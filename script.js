@@ -10,16 +10,18 @@ $('#currentDay').text(dayOnTop);
 
 // Hours of work from 8am - 5pm
 var scheduleHours = [
-    "4am","8am", "9am", "10am", "11am", "12am", "1pm", "2pm",
-    "3pm", "4pm", "5pm"
-] 
+    "9am", "10am", "11am", "12am", "1pm", "2pm",
+    "3pm", "4pm", "5pm",'11pm'
+]
 
-for(i=0; i<scheduleHours.length; i++){
-    $('ul').append('<li class="row" ><span>'+scheduleHours[i]+'</span></li>');
+
+
+for (i = 0; i < scheduleHours.length; i++) {
+    $('ul').append('<li class="row" ><span id =' + scheduleHours[i] + '>' + scheduleHours[i] + '</span></li>');
 }
 
-$('span').addClass('col-2 time-block hour') 
-$('.row').append('<input></input>')   
+$('span').addClass('col-2 time-block')
+$('.row').append('<input></input>')
 $('input').addClass('col-8')
 $('input').attr({
     type: 'text',
@@ -33,98 +35,67 @@ $('button').text('Click here to save');
 
 // Button for each time user saves an input
 
-let userSave = {};
 
-$('button').click(function(){
+let userInput = '';
+let hourInput = '';
+let local = ''
 
-        let userInput = $(this).prev().val();
-        console.log(userInput);
-        let hourInput = $(this).siblings('span').text();
-        console.log(hourInput);
+$('button').click(function () {
 
-        localStorage.setItem(hourInput, userInput)        
-        
-    })
+    let userInput = $(this).prev().val();
+   
+    let hourInput = $(this).siblings('span').text();
+  
+
+    let local = localStorage.setItem(hourInput, userInput)
+
+})
+// This is the best way with my code in hand that i could make it save to the localStorage I tried my own startegy so that there wont be many linees of code
+for (const property in localStorage) {
+  
+        $('#9am').siblings('input').val(localStorage.getItem('9am'))
+        $('#10am').siblings('input').val(localStorage.getItem('10am'))
+        $('#11am').siblings('input').val(localStorage.getItem('11am'))
+        $('#12am').siblings('input').val(localStorage.getItem('12am'))
+        $('#1pm').siblings('input').val(localStorage.getItem('1pm'))
+        $('#2pm').siblings('input').val(localStorage.getItem('2pm'))
+        $('#3pm').siblings('input').val(localStorage.getItem('3pm'))
+        $('#4pm').siblings('input').val(localStorage.getItem('4pm'))
+        $('#5pm').siblings('input').val(localStorage.getItem('5pm'))
+}
 
 
-   let see = moment().toString();
-   console.log(see)
+
+let amPm = new Date().getHours();
+console.log('correct time ' + amPm)
+// if (amPm > 12) {
+//     amPm -= 12
+//     console.log('this is the first result ' + amPm)
+// }
+// } else if(amPm > 16){
+//     amPm -= 11
+//     console.log('this is the other result ' + amPm)
+//    }
+console.log(amPm)
 
 
-$('span').each(function(){
-    let tryout = moment($(this).text(), "ha")
-    console.log(tryout)
-    let usertest = $(this).text()
-    console.log(usertest)
-    console.log($(this).text())
-    console.log(moment().format('ha'))
-    if($(this).text() === moment().format('ha')){
-        console.log('orange')
-        $(this).css('background-color', 'orange')
-    } else if($(this).text() <= moment().format('ha')){
-        $(this).css('background-color', 'red')
-        console.log('red----------------------')
 
-    } else if($(this).text() >= moment().format('ha')){
+$('span').each(function () {
+
+    console.log(amPm)
+    let testhour = parseInt($(this).text());
+    console.log(testhour)
+
+    if (parseInt($(this).text()) > amPm) {
         $(this).css('background-color', 'green')
         console.log('green>>>>>>>>>>>>>>>>>>>>>>')
 
-    } 
+    } else if (parseInt($(this).text()) === amPm) {
+        console.log('orange')
+        $(this).css('background-color', 'orange')
+    }
+    else if (parseInt($(this).text()) < amPm) {
+        $(this).css('background-color', 'red')
+        console.log('red----------------------')
+    }
 })
-
-//   $('span').each(function(){
-//         console.log((parseInt($(this).text())))
-//         console.log(parseInt(moment().format('ha')))
-
-//         if(parseInt(moment().format(' ha ')) < parseInt($(this).text())){
-//             console.log('----------')
-//             // $('li').parent().css('background-color', 'red')
-
-//         }
-//     });
-
-    // var dt = moment("9pm", ["h:mm a"]).format("H");
-    // console.log(dt)
-
-
-    // let am = moment(scheduleHours[2], 'ha');
-    // console.log(am)
-    
-
-
-
-    // console.log(moment().format('ha'))
-
-
-    // $('span').each(function(){
-    //     console.log(parseInt($(this).text()))
-    //     if((parseInt($(this).text()) < moment().format('h'))){
-    //         $(this).css('background-color', 'red')
-    //     }
-    // })
-
-
-    // if(9 < 11){
-    // console.log('test')
-// }
-
-
-// $('button').click(function(){
-//     textInput += $(this).prev().val();
-
-//     // timeCheck += $('timeId').attr().val();
-//     console.log(this, textInput)
-   
-
-// })
-
-// alert(parseInt(scheduleHours[3]))
-// alert(moment().format('h'));
-// function storage(){
-// localStorage.setItem("storage", userInput);
-
-// if(storeData8){
-//     let storeData8 = $("#agenda").val(localStorage.getItem('storage'));
-//      $('#agenda').text(storeData8)
-// } 
-// }
