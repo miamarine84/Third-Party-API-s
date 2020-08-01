@@ -10,12 +10,10 @@ $('#currentDay').text(dayOnTop);
 
 // Hours of work from 8am - 5pm
 var scheduleHours = [
-    "9am", "10am", "11am", "12am", "1pm", "2pm",
-    "3pm", "4pm", "5pm",'11pm'
+    "7am","8am","9am", "10am", "11am", "12am", "1pm", "2pm",
+    "3pm", "4pm", "5pm",
 ]
-
-
-
+//Creating each row, span, li and button for each scheduleHours
 for (i = 0; i < scheduleHours.length; i++) {
     $('ul').append('<li class="row" ><span id =' + scheduleHours[i] + '>' + scheduleHours[i] + '</span></li>');
 }
@@ -51,8 +49,9 @@ $('button').click(function () {
 
 })
 // This is the best way with my code in hand that i could make it save to the localStorage I tried my own startegy so that there wont be many linees of code
-for (const property in localStorage) {
-  
+
+        $('#7am').siblings('input').val(localStorage.getItem('7am'))
+        $('#8am').siblings('input').val(localStorage.getItem('8am'))
         $('#9am').siblings('input').val(localStorage.getItem('9am'))
         $('#10am').siblings('input').val(localStorage.getItem('10am'))
         $('#11am').siblings('input').val(localStorage.getItem('11am'))
@@ -62,39 +61,43 @@ for (const property in localStorage) {
         $('#3pm').siblings('input').val(localStorage.getItem('3pm'))
         $('#4pm').siblings('input').val(localStorage.getItem('4pm'))
         $('#5pm').siblings('input').val(localStorage.getItem('5pm'))
-}
 
 
+// This portion modifies the styling of the elements depending on the time if it's current past or active
 
-let amPm = new Date().getHours();
-console.log('correct time ' + amPm)
-// if (amPm > 12) {
-//     amPm -= 12
-//     console.log('this is the first result ' + amPm)
+let currentHour = new Date().getHours();
+console.log(currentHour)
+// console.log('correct time ' + currentHour)
+// if (currentHour > 12) {
+//     currentHour += 'pm'
+//     console.log('this is the first result ' + currentHour)
 // }
-// } else if(amPm > 16){
-//     amPm -= 11
-//     console.log('this is the other result ' + amPm)
+// else if(currentHour < 12){
+
+//     currentHour += 'am'
+//     console.log('this is the other result ' + currentHour)
 //    }
-console.log(amPm)
 
 
+
+let timePm = ''
 
 $('span').each(function () {
 
-    console.log(amPm)
+    console.log(currentHour)
     let testhour = parseInt($(this).text());
+
     console.log(testhour)
 
-    if (parseInt($(this).text()) > amPm) {
+    if (parseInt($(this).text()) > currentHour) {
         $(this).css('background-color', 'green')
         console.log('green>>>>>>>>>>>>>>>>>>>>>>')
 
-    } else if (parseInt($(this).text()) === amPm) {
+    } else if (parseInt($(this).text()) === currentHour) {
         console.log('orange')
         $(this).css('background-color', 'orange')
     }
-    else if (parseInt($(this).text()) < amPm) {
+    else if (parseInt($(this).text()) < currentHour) {
         $(this).css('background-color', 'red')
         console.log('red----------------------')
     }
